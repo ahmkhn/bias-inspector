@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { db } from "~/server/db";
 
+// everytime a change is made in the DB, the page will be updated on next visit.
+export const dynamic = "force-dynamic";
+
 export default async function HomePage() {
   const posts = await db.query.posts.findMany();
   console.log(posts);
