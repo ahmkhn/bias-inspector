@@ -24,7 +24,7 @@ const useUploadThingInputProps = (...args: Input) => {
     inputProps: {
       onChange,
       multiple: ($ut.routeConfig?.image?.maxFileCount ?? 1) > 1,
-      accept: "image/*",
+      accept: "application/pdf",
     },
     isUploading: $ut.isUploading,
   };
