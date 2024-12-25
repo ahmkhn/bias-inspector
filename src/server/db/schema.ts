@@ -22,7 +22,7 @@ export const createTable = pgTableCreator((name) => `bias-inspector_${name}`);
 export const images = createTable(
   "images",
   {
-    id: serial("id").primaryKey(),
+    id: integer("id").primaryKey().generatedByDefaultAsIdentity(),
     name: varchar("name", { length: 256 }).notNull(),
     url: varchar("url", { length: 1024 }).notNull(),
 
