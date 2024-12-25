@@ -35,7 +35,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="#features"
-                className="inline-flex items-center px-8 py-3 rounded-lg bg-card text-primary hover:bg-card/80 transition-colors md:py-4 md:text-lg md:px-10"
+                className="inline-flex items-center px-8 py-3 rounded-lg bg-card text-blue-600 hover:bg-card/80 transition-colors md:py-4 md:text-lg md:px-10 border-gray-200 border-2"
               >
                 Learn More
               </Link>
