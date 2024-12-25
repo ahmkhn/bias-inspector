@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
 
-  const images = await getUserPDFs();
+  //const images = await getUserPDFs();
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
@@ -16,7 +16,7 @@ export default async function HomePage() {
       </SignedOut>
 
       <SignedIn>
-        {images.map((post)=>(<div key={post.id}>{post.name}</div>))}
+        
       </SignedIn>
     </main>
   );

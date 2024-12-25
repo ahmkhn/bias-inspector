@@ -2,6 +2,7 @@
 import { SignedOut, SignInButton, SignOutButton, SignedIn, UserButton} from "@clerk/nextjs";
 import { UploadButton } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
+import { SimpleUploadButton } from "./simple-upload-button";
 export function TopNav(){
     const router = useRouter(); // refreshes the page router after upload is complete.
     return ( 
@@ -13,7 +14,7 @@ export function TopNav(){
                 <SignInButton/>
             </SignedOut>
             <SignedIn>
-                <UploadButton endpoint="imageUploader" onClientUploadComplete={()=>{router.refresh();}} />
+                <SimpleUploadButton/>
                 <UserButton/>
             </SignedIn>
         </div>

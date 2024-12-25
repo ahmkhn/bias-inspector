@@ -6,7 +6,7 @@
 - [ ] Setup CI/CD pipeline
 - [x] Tidy up build process
 - [x] Setup error management (w/ Sentry)
-- [ ] Setup analytics tracking (w/ PostHog)
+- [x] Setup analytics tracking (w/ PostHog)
 - [x] Scaffold Basic UI 
 - [x] Setup Database (w/ Neon PostgreSQL)
 - [x] Attach database to UI
