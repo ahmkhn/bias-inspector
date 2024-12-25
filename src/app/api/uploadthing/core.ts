@@ -3,6 +3,7 @@ import { UploadThingError } from "uploadthing/server";
 import { auth } from "@clerk/nextjs/server";
 import { db } from "~/server/db";
 import { images } from "~/server/db/schema";
+import { ratelimit } from "~/server/ratelimit";
 const f = createUploadthing();
 
 
@@ -19,19 +20,21 @@ export const ourFileRouter = {
       maxFileCount: 1,
     },
   })
-    // Set permissions and file types for this FileRoute
+
     .middleware(async ({ req }) => {
-      // This code runs on your server before upload
+
       const user = auth();
 
-      // If you throw, the user will not be able to upload
       if (!(await user).userId) throw new UploadThingError("Unauthorized");
 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
+      const userId = (await user).userId;
+      if (!userId) throw new UploadThingError("Unauthorized");
+      const {success} = await ratelimit.limit( userId );
+      if (!success) throw new UploadThingError("Rate limit exceeded");
+
       return { userId: (await user).userId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
       console.log("Upload complete for userId:", metadata.userId);
       if (!metadata.userId) {
         throw new UploadThingError("User ID is null");
