@@ -5,15 +5,16 @@ import { SignedOut, SignedIn } from "@clerk/nextjs";
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const posts = await db.query.posts.findMany();
-  console.log(posts);
+  const images = await db.query.images.findMany();
+  console.log(images);
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
       <SignedOut>
         <div className="h-full w-full text-2xl text-center">Please sign in with the button above</div>
       </SignedOut>
+
       <SignedIn>
-        {posts.map((post)=>(<div key={post.id}>{post.name}</div>))}
+        {images.map((post)=>(<div key={post.id}>{post.name}</div>))}
       </SignedIn>
     </main>
   );
