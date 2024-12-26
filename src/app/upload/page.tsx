@@ -8,6 +8,7 @@ import { Lock } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
 import * as pdfjsLib from "pdfjs-dist";
 import { PDFWorker } from "pdfjs-dist";
+import { useRouter } from "next/navigation";
 import OpenAI from "openai";
 
 
@@ -16,11 +17,13 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("text"); // "text" or "pdf"
   const [fileName, getFileName] = useState("");
   const [url, setURLHook] = useState("");
-  const [pdfText, setPDFText] = useState("");
-  const handleAnalyze = async () => {
+  const router = useRouter();
+  const [loading,setLoading] = useState(false);
 
-
+  async function handleAnalyze  () {
+    let extractedText = "";
     if(url!==""){
+      console.log('entered if block')
       const worker = new Worker(new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url));
       
       // Set worker
@@ -28,7 +31,6 @@ export default function DashboardPage() {
       
       // Get PDF document
       const pdf = await pdfjsLib.getDocument({ url: url, verbosity: 0 }).promise;
-      let extractedText = "";
 
       // Extract text from each page
       for (let i = 1; i <= pdf.numPages; i++) {
@@ -37,14 +39,29 @@ export default function DashboardPage() {
         const pageText = textContent.items.map((item: any) => item.str).join(" ");
         extractedText += pageText + "\n";
       }
-
-      setPDFText(extractedText);
       // Clean up worker
       worker.terminate();
     }
 
-    console.log(pdfText)
-    
+
+    // send extracted text to OpenAI API, retrieve JSON response and format it in resultanalysis page.
+    // two attempts
+    if(extractedText!==""){
+      localStorage.setItem("textData", extractedText);
+      //set a loading bar here, then redirect to resultanalysis page..
+      setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      router.push("/resultanalysis");
+    }else{
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      if(extractedText!==""){
+        localStorage.setItem("textData", extractedText);
+        //set a loading bar here, then redirect to resultanalysis page..
+        setLoading(true);
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        router.push("/resultanalysis");
+      }
+    }
 
     /*try{
       const response = await fetch('/api/analyze', {
@@ -62,7 +79,40 @@ export default function DashboardPage() {
 
   };
 
-  const { isLoaded } = useAuth();
+  const { isLoaded } = useAuth(); // check if webpage has loaded
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "#f0f0f0", // Optional background color
+        }}
+      >
+        <svg
+          width="80"
+          height="80"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="black"
+        >
+          <path
+            d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+            opacity=".25"
+          />
+          <path
+            d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+            className="spinner_ajPY"
+          />
+        </svg>
+      </div>
+    );
+  }
+  
 
   if (!isLoaded) {
     return (

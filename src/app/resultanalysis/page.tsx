@@ -6,6 +6,9 @@ import { AlertCircle } from 'lucide-react';
 const COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#6366f1'];
 
 export default function AnalysisDashboard() {
+
+  const data = localStorage.getItem("textData");
+  console.log("analysis data!!!!" + data);
   // Prepare data for charts
   const biasTypeData = [
     { name: 'Cultural Bias', count: 2 },
