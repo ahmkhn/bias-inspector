@@ -4,7 +4,7 @@
 
 
 body { 
-    @apply bg-black text-white;
+    @apply bg-white text-white;
 }
 
 
@@ -181,3 +181,4 @@ body {
     transform: rotate(360deg);
   }
 }
+

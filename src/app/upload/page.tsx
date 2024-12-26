@@ -5,15 +5,40 @@ import { Upload, FileText, AlertCircle } from "lucide-react";
 import { SimpleUploadButton } from "../_components/simple-upload-button";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Lock } from "lucide-react";
+import { useAuth } from "@clerk/nextjs";
+import OpenAI from "openai";
+
+
 export default function DashboardPage() {
   const [text, setText] = useState("");
   const [activeTab, setActiveTab] = useState("text"); // "text" or "pdf"
   const [fileName, getFileName] = useState("");
   const [url, setURLHook] = useState("");
-  const handleAnalyze = () => {
-    // To be implemented later
-    console.log("Analyzing...");
+
+  const handleAnalyze = async () => {
+    try{
+      const response = await fetch('/api/analyze', {
+        method: 'POST'
+      });
+      if(!response.ok){
+        throw new Error('Failed to analyze');
+      }
+      const data = await response.json();
+      console.log(data);
+    }catch(error){
+      console.error(error);
+    }
   };
+
+  const { isLoaded } = useAuth();
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div>
