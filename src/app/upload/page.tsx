@@ -63,10 +63,17 @@ export default function DashboardPage() {
                       placeholder="Enter your text here (minimum 300 words)..."
                       className="min-h-[300px] w-full rounded-lg border border-border bg-background p-4 text-foreground focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
                     />
+                    <p className="text-gray-400">{text.split(/\s+/).length - 1} words</p>
                     {text.split(/\s+/).length < 300 && text.length > 0 && (
                       <p className="mt-2 flex items-center text-sm text-destructive">
                         <AlertCircle className="mr-2 h-4 w-4" />
-                        Minimum 300 words required ({text.split(/\s+/).length} words currently)
+                        Minimum 300 words required
+                      </p>
+                    )}
+                    {text.split(/\s+/).length > 2000 && (
+                      <p className="mt-2 flex items-center text-sm text-destructive">
+                        <AlertCircle className="mr-2 h-4 w-4" />
+                        Maximum 2,000 words allowed
                       </p>
                     )}
                   </div>
@@ -95,9 +102,9 @@ export default function DashboardPage() {
                   <button
                     onClick={handleAnalyze}
                     disabled={
-                      (activeTab === "text" && text.split(/\s+/).length < 300) ||
-                      (activeTab === "pdf" && !(document.getElementById("pdf-upload") as HTMLInputElement)?.files?.[0])
-                    }
+                      (activeTab === "text" && (text.split(/\s+/).length < 300 || text.split(/\s+/).length > 2000)) ||
+                      (activeTab === "pdf" && fileName === "" && url === "")
+                    }                    
                     className="rounded-lg bg-blue-600 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Analyze
