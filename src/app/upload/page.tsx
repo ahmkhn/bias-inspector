@@ -6,6 +6,8 @@ import { SimpleUploadButton } from "../_components/simple-upload-button";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Lock } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
+import * as pdfjsLib from "pdfjs-dist";
+import { PDFWorker } from "pdfjs-dist";
 import OpenAI from "openai";
 
 
@@ -14,9 +16,37 @@ export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("text"); // "text" or "pdf"
   const [fileName, getFileName] = useState("");
   const [url, setURLHook] = useState("");
-
+  const [pdfText, setPDFText] = useState("");
   const handleAnalyze = async () => {
-    try{
+
+
+    if(url!==""){
+      const worker = new Worker(new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url));
+      
+      // Set worker
+      pdfjsLib.GlobalWorkerOptions.workerPort = worker;
+      
+      // Get PDF document
+      const pdf = await pdfjsLib.getDocument({ url: url, verbosity: 0 }).promise;
+      let extractedText = "";
+
+      // Extract text from each page
+      for (let i = 1; i <= pdf.numPages; i++) {
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map((item: any) => item.str).join(" ");
+        extractedText += pageText + "\n";
+      }
+
+      setPDFText(extractedText);
+      // Clean up worker
+      worker.terminate();
+    }
+
+    console.log(pdfText)
+    
+
+    /*try{
       const response = await fetch('/api/analyze', {
         method: 'POST'
       });
@@ -27,7 +57,9 @@ export default function DashboardPage() {
       console.log(data);
     }catch(error){
       console.error(error);
-    }
+    }*/
+
+
   };
 
   const { isLoaded } = useAuth();
