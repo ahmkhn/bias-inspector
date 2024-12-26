@@ -20,6 +20,9 @@ export default function DashboardPage() {
   const router = useRouter();
   const [loading,setLoading] = useState(false);
 
+
+  
+
   async function handleAnalyze  () {
     let extractedText = "";
     if(url!==""){
