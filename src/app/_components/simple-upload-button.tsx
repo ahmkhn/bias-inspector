@@ -4,7 +4,17 @@ import { useUploadThing } from "~/utils/uploadthing";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { usePostHog } from "posthog-js/react";
+import { useState } from "react";
 // inferred input off useUploadThing
+
+interface SimpleUploadButtonProps {
+
+  setFileName: (fileName: string) => void;
+
+  setURL: (url: string) => void;
+
+}
+
 type Input = Parameters<typeof useUploadThing>;
 
 const useUploadThingInputProps = (...args: Input) => {
@@ -14,6 +24,7 @@ const useUploadThingInputProps = (...args: Input) => {
     if (!e.target.files) return;
 
     const selectedFiles = Array.from(e.target.files);
+    console.log("selected files", selectedFiles);
     const result = await $ut.startUpload(selectedFiles);
 
     console.log("uploaded files", result);
@@ -56,7 +67,7 @@ function UploadSVG() {
         height="24"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        fill="white"
+        fill="black"
       >
         <path
           d="M12,1A11,11,0,1,0,23,12,11,11,0,0,0,12,1Zm0,19a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
@@ -70,16 +81,16 @@ function UploadSVG() {
     );
   }
   
-  export function SimpleUploadButton() {
+  export const SimpleUploadButton: React.FC<SimpleUploadButtonProps> = ({ setFileName, setURL }: SimpleUploadButtonProps) => {
     const router = useRouter();
   
     const posthog = usePostHog();
-  
+    
     const { inputProps } = useUploadThingInputProps("imageUploader", {
       onUploadBegin() {
         posthog.capture("upload_begin");
         toast(
-          <div className="flex items-center gap-2 text-white">
+          <div className="flex items-center gap-2 text-black">
             <LoadingSpinnerSVG /> <span className="text-lg">Uploading...</span>
           </div>,
           {
@@ -93,23 +104,27 @@ function UploadSVG() {
         toast.dismiss("upload-begin");
         toast.error("Upload failed");
       },
-      onClientUploadComplete() {
-        toast.dismiss("upload-begin");
+      onClientUploadComplete(result) {
+        console.log("client upload complete", result);
+        const uploadedFileName = result?.[0]?.name;
+        const fileURL = result?.[0]?.url;
+        setFileName(uploadedFileName!);
+        setURL(fileURL!);
         toast("Upload complete!");
-  
+        toast.dismiss("upload-begin");
         router.refresh();
       },
     });
   
     return (
       <div>
-        <label htmlFor="upload-button" className="cursor-pointer">
+        <label htmlFor="pdf-upload" className="cursor-pointer bg-black">
           <UploadSVG />
         </label>
         <input
-          id="upload-button"
+          id="pdf-upload"
           type="file"
-          className="sr-only"
+          className="sr-only bg-black"
           {...inputProps}
         />
       </div>

@@ -9,6 +9,7 @@ import { extractRouterConfig } from "uploadthing/server";
 import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "sonner";
 import {CSPostHogProvider} from "./_analytics/providers";
+import { Footer } from "./_components/footer";
 
 
 export const metadata: Metadata = {
@@ -37,6 +38,7 @@ export default function RootLayout({
 
             <TopNav/>
             {children}
+            <Footer/>
             <Toaster/>
           </body>
         </html>

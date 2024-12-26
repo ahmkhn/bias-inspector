@@ -1,6 +1,7 @@
 "use client";
 
 import { SignedOut, SignInButton, SignOutButton, SignedIn, UserButton } from "@clerk/nextjs";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export function TopNav() {
@@ -8,7 +9,7 @@ export function TopNav() {
 
   return (
     <nav className="sticky top-0 z-50 flex w-full items-center justify-between border-b bg-white p-4 backdrop-blur-md">
-      <div className="text-xl font-semibold text-primary">Bias Inspector</div>
+      <Link href="/" className="text-xl font-semibold text-primary">Bias Inspector</Link>
       <div className="flex flex-row items-center gap-4">
         <SignedOut>
           <SignInButton>
