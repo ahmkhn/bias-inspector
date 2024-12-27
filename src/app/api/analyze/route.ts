@@ -32,7 +32,7 @@ Additionally, include:
 
 A Final Summary: Provide a concise and thoughtful evaluation of the overall biases in the text. Discuss whether the text exhibits systemic patterns of bias or appears mostly neutral and balanced. Highlight any major areas for improvement.
 
-Provide your response in JSON format, using the example below for guidance (this is not the text to analyze):
+Provide your response in this JSON format it must exactly be just like this and in this format, using the example below for guidance (this is not the text to analyze):
 json
 {
   "bias_analysis": [
