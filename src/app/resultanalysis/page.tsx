@@ -234,7 +234,7 @@ export default function AnalysisDashboard() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ScrollArea className="h-[300px] pr-4">
+          <ScrollArea className="h-[300px] pr-4 custom-scrollbar">
             <div className="space-y-6">
               {biasAnalysis.map((item, index) => (
                 <div key={index} className="space-y-2">
@@ -297,7 +297,8 @@ export default function AnalysisDashboard() {
           </div>
   
           <div className="grid gap-6 md:grid-cols-3">
-            {/* Overall Score Card */}
+
+            {/* score card */}
             <Card className="col-span-1">
               <CardHeader className="space-y-1">
                 <CardTitle className="text-2xl font-bold">Overall Score</CardTitle>
@@ -316,8 +317,10 @@ export default function AnalysisDashboard() {
             </Card>
   
             <KeyFindings findings={apiContent?.key_findings ?? []} />
+
             <ImprovementSuggestions biasAnalysis={apiContent?.bias_analysis ?? []} />
-            {/* Bias Distribution */}
+
+            {/* bias*/}
             <Card className="col-span-3">
               <CardHeader>
                 <CardTitle>Bias Distribution by Type</CardTitle>
@@ -351,7 +354,8 @@ export default function AnalysisDashboard() {
                 </div>
               </CardContent>
             </Card>
-            {/* Confidence Scores */}
+
+            {/* confidence barchart */}
             <Card className="col-span-3">
               <CardHeader>
                 <CardTitle>Confidence Scores by Instance</CardTitle>

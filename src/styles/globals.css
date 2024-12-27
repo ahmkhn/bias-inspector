@@ -30,7 +30,6 @@ body {
         --popover-foreground: 222.2 84% 4.9%;
 
 
-        --primary: 222.2 47.4% 11.2%;
 
 
         --primary-foreground: 210 40% 98%;
@@ -84,7 +83,9 @@ body {
         --chart-5: 27 87% 67%;
 
 
-        --radius: 0.5rem
+        --radius: 0.5rem;
+
+        --scrollbar: 222.2 47.4% 11.2%;
     }
   .dark {
 
@@ -106,8 +107,6 @@ body {
 
         --popover-foreground: 210 40% 98%;
 
-
-        --primary: 210 40% 98%;
 
 
         --primary-foreground: 222.2 47.4% 11.2%;
@@ -158,7 +157,9 @@ body {
         --chart-4: 280 65% 60%;
 
 
-        --chart-5: 340 75% 55%
+        --chart-5: 340 75% 55%;
+
+        --scrollbar: 222.2 84% 4.9%;
     }
 }
 
@@ -181,4 +182,3 @@ body {
     transform: rotate(360deg);
   }
 }
-

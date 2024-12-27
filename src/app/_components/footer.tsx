@@ -17,7 +17,7 @@ export function Footer(){
                 <a className="underline text-gray-500" href="/privacy" target="">privacy policy</a>
             </p>
             <p className="text-center text-base text-muted-foreground">
-               developed with ❤️ by <a className="underline text-blue-600" href="https://linkedin.com/in/ahmkhn" target="_blank">@ahmkhn</a>
+               made with ❤️ by <a className="underline text-blue-600" href="https://linkedin.com/in/ahmkhn" target="_blank">@ahmkhn</a>
             </p>
           </div>
         </div>

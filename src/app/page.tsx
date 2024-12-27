@@ -1,19 +1,13 @@
 "use client";
 import Link from "next/link";
-import { db } from "~/server/db";
-import { SignedOut, SignedIn } from "@clerk/nextjs";
-import { getUserPDFs } from "~/server/queries";
-import { TopNav } from "./_components/topnav";
-// everytime a change is made in the DB, the page will be updated on next visit.
-export const dynamic = "force-dynamic";
 
 
-import { Upload, ChartBar, Brain, Shield, LineChart, Github, Router} from "lucide-react";
+
+import { Upload, ChartBar, Brain, Shield, LineChart} from "lucide-react";
 
 export default function HomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-gradient-to-b from-background to-secondary">
-      {/* Hero Section */}
       <main className="flex-grow">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-20">
           <div className="text-center">
@@ -23,7 +17,7 @@ export default function HomePage() {
             </h1>
             <p className="mx-auto mt-3 max-w-md text-base text-muted-foreground sm:text-lg md:mt-5 md:max-w-3xl md:text-xl">
               Bias Inspector: The AI-powered tool that scans research papers for colonial, gender, and regional biases. 
-              Elevate your academic content with our cutting-edge NLP technology.
+              Elevate your academic content with our NLP technology.
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <Link 
@@ -43,7 +37,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Features Section */}
         <div id="features" className="bg-card">
           <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
             <div className="max-w-3xl mx-auto text-center">
@@ -66,12 +59,12 @@ export default function HomePage() {
                 },
                 {
                   name: 'Bias Dashboard',
-                  description: 'View comprehensive reports with heatmaps, charts, and bias scores.',
+                  description: 'View comprehensive reports with suggested improvements, charts and bias scores.',
                   icon: LineChart,
                 },
                 {
                   name: 'Privacy',
-                  description: 'All documents are deleted after analysis to ensure data security.',
+                  description: 'All documents are deleted after analysis to ensure data privacy.',
                   icon: Shield,
                 },
               ].map((feature) => (
@@ -87,7 +80,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Stats Section for the future*/}
         {/*<div className="bg-background">
           <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
