@@ -17,6 +17,25 @@ interface SimpleUploadButtonProps {
 
 type Input = Parameters<typeof useUploadThing>;
 
+
+async function deleteFile(url: string){
+  try{
+    const response = await fetch("/api/uploadthing", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url }),
+    });
+    if (!response.ok) {
+      throw new Error("Failed to delete file");
+    }
+  }catch(error){
+    console.error("Error deleting file", error);
+  }
+}
+
+
 const useUploadThingInputProps = (...args: Input) => {
   const $ut = useUploadThing(...args);
 
@@ -24,11 +43,16 @@ const useUploadThingInputProps = (...args: Input) => {
     if (!e.target.files) return;
 
     const selectedFiles = Array.from(e.target.files);
-    console.log("selected files", selectedFiles);
     const result = await $ut.startUpload(selectedFiles);
 
-    console.log("uploaded files", result);
     // TODO: persist result in state maybe?
+
+    // delete the file:
+    if (result?.[0]?.appUrl) {
+      deleteFile(result[0].appUrl);
+    }
+
+
   };
 
   return {
@@ -105,7 +129,6 @@ function UploadSVG() {
         toast.error("Upload failed");
       },
       onClientUploadComplete(result) {
-        console.log("client upload complete", result);
         const uploadedFileName = result?.[0]?.name;
         const fileURL = result?.[0]?.url;
         setFileName(uploadedFileName!);

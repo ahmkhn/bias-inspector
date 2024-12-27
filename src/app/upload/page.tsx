@@ -44,45 +44,23 @@ export default function DashboardPage() {
       }
       // Clean up worker
       worker.terminate();
-    }else if(text!=="" && activeTab==="text"){
+
+    }else if(text!=="" && activeTab==="text"){ // if it's a text input
       localStorage.setItem("textData", text);
       setLoading(true);
       await new Promise((resolve) => setTimeout(resolve, 2000));
       router.push("/resultanalysis");
     }
+
     // send extracted text to OpenAI API, retrieve JSON response and format it in resultanalysis page.
-    // two attempts
     if(extractedText!==""){
       localStorage.setItem("textData", extractedText);
-      //set a loading bar here, then redirect to resultanalysis page..
-      setLoading(true);
+      setLoading(true); // set Loading bar
       await new Promise((resolve) => setTimeout(resolve, 2000));
       router.push("/resultanalysis");
     }else{
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      if(extractedText!==""){
-        localStorage.setItem("textData", extractedText);
-        //set a loading bar here, then redirect to resultanalysis page..
-        setLoading(true);
-        await new Promise((resolve) => setTimeout(resolve, 2000));
-        router.push("/resultanalysis");
-      }
     }
-
-    /*try{
-      const response = await fetch('/api/analyze', {
-        method: 'POST'
-      });
-      if(!response.ok){
-        throw new Error('Failed to analyze');
-      }
-      const data = await response.json();
-      console.log(data);
-    }catch(error){
-      console.error(error);
-    }*/
-
-
   };
 
   const { isLoaded } = useAuth(); // check if webpage has loaded
