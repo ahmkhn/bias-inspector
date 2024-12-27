@@ -316,7 +316,7 @@ export default function AnalysisDashboard() {
             </Card>
   
             <KeyFindings findings={apiContent?.key_findings ?? []} />
-  
+            <ImprovementSuggestions biasAnalysis={apiContent?.bias_analysis ?? []} />
             {/* Bias Distribution */}
             <Card className="col-span-3">
               <CardHeader>
@@ -351,7 +351,6 @@ export default function AnalysisDashboard() {
                 </div>
               </CardContent>
             </Card>
-  
             {/* Confidence Scores */}
             <Card className="col-span-3">
               <CardHeader>
@@ -395,7 +394,6 @@ export default function AnalysisDashboard() {
               </CardContent>
             </Card>
   
-            <ImprovementSuggestions biasAnalysis={apiContent?.bias_analysis ?? []} />
           </div>
         </div>
       </div>

@@ -44,9 +44,12 @@ export default function DashboardPage() {
       }
       // Clean up worker
       worker.terminate();
+    }else if(text!=="" && activeTab==="text"){
+      localStorage.setItem("textData", text);
+      setLoading(true);
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      router.push("/resultanalysis");
     }
-
-
     // send extracted text to OpenAI API, retrieve JSON response and format it in resultanalysis page.
     // two attempts
     if(extractedText!==""){
