@@ -48,7 +48,6 @@ export default function DashboardPage() {
     }else if(text!=="" && activeTab==="text"){ // if it's a text input
       localStorage.setItem("textData", text);
       setLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
       router.push("/resultanalysis");
     }
 
@@ -56,10 +55,7 @@ export default function DashboardPage() {
     if(extractedText!==""){
       localStorage.setItem("textData", extractedText);
       setLoading(true); // set Loading bar
-      await new Promise((resolve) => setTimeout(resolve, 2000));
       router.push("/resultanalysis");
-    }else{
-      await new Promise((resolve) => setTimeout(resolve, 2000));
     }
   };
 
