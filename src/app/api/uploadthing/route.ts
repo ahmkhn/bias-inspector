@@ -34,7 +34,7 @@ export async function DELETE(request: Request) {
       } catch (error) {
         console.error("Error during delayed deletion:", error);
       }
-    }, 30000); // 
+    }, 10000); // 
 
     // respond immediately to the client
     return NextResponse.json({ message: "File deletion scheduled" }, { status: 200 });
