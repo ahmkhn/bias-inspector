@@ -141,8 +141,8 @@ export default function AnalysisDashboard() {
             }
           }
           
-          // only remove from localStorage after successful analysis
-          localStorage.removeItem("textData");
+          // clear all local storage, we don't use it for anything else.
+          localStorage.clear();
           
           setAnalysisStatus(prev => ({
             ...prev,
