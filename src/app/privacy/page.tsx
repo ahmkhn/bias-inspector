@@ -10,7 +10,7 @@ export default function PrivacyPolicy() {
       <div className="mx-auto max-w-4xl space-y-8">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold tracking-tight text-primary">Privacy Policy</h1>
-          <p className="text-lg text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+          <p className="text-lg text-muted-foreground">Last updated: 12/28/2024</p>
         </div>
 
         <div className="space-y-6">
