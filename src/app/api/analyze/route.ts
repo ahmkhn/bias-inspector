@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { NextResponse } from 'next/server';
-
+import { ratelimit } from '~/server/ratelimit';
+import { auth } from "@clerk/nextjs/server";
 export async function POST(req : Request) {
   try {
     const { textData } = await req.json(); // Parse the textData from the request body
@@ -93,7 +94,16 @@ Be as precise and comprehensive as possible in your analysis."
     if (!message) {
       throw new Error('No message returned from OpenAI');
     }
+
+
+    const user = await auth();
+    const { success } = await ratelimit.limit(user.userId ?? '');
+    if (!success) {
+      return NextResponse.json({ error: 'Ratelimited' }, { status: 429 });
+    }
     return NextResponse.json({ result: message });
+
+    
   } catch (error) {
     console.error('OpenAI API error:', error);
     return NextResponse.json({ error: 'Failed to analyze' }, { status: 500 });
