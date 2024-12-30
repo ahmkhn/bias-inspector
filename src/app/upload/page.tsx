@@ -25,7 +25,7 @@ export default function DashboardPage() {
 
   async function handleAnalyze  () {
     let extractedText = "";
-    if(url!==""){
+    if(url!=="" && activeTab==="pdf"){
       console.log('entered if block')
       const worker = new Worker(new URL('pdfjs-dist/build/pdf.worker.mjs', import.meta.url));
       
