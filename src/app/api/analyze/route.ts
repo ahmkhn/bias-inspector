@@ -17,12 +17,25 @@ export async function POST(req : Request) {
       model: "gpt-4o-mini",
       messages: [
         { role: "system", content: `
-          "Analyze the following academic text for potential biases. Your task is to identify, classify, and provide actionable insights on biases in the text. The analysis should cover the following categories of biases:
+          "Analyze the following academic text for potential biases. Your task is to identify, classify, and provide actionable insights on biases in the text. The analysis MAY cover the following categories of biases, pick the top biases seen in the text and report about them.
 
-Gender Bias: Examine the use of pronouns, gendered stereotypes, language suggesting unequal representation, or assumptions about roles or abilities based on gender.
-Regional/Cultural Bias: Look for Western-centric views, exclusion of non-Western perspectives, or any statements that favor one culture, region, or ethnicity over others.
-Colonial Perspectives: Identify language or assumptions rooted in colonial ideology, marginalization of indigenous perspectives, or framing that reflects colonial dominance.
-Missing Viewpoints or Perspectives: Highlight gaps where underrepresented groups, marginalized perspectives, or diverse viewpoints are noticeably absent or ignored.
+1. Gender Bias: Examine the use of pronouns, gendered stereotypes, language suggesting unequal representation, or assumptions about roles or abilities based on gender.
+2. Regional/Cultural Bias: Look for Western-centric views, exclusion of non-Western perspectives, or any statements that favor one culture, region, or ethnicity over others.
+3. Colonial Perspectives: Identify language or assumptions rooted in colonial ideology, marginalization of indigenous perspectives, or framing that reflects colonial dominance.
+4. Missing Viewpoints or Perspectives: Highlight gaps where underrepresented groups, marginalized perspectives, or diverse viewpoints are noticeably absent or ignored.
+5. Adherence Bias
+6. Admission rate bias
+7. Design bias 
+8. sample bias
+9. selection bias
+10. performance bias.
+11. detection bias
+12. Case Selection Bias (important)
+and many more, be detailed and specific on your key findings report.
+Analyze this list one by one, and provide a detailed report on the biases you did NOT see in the text, and provide postive and critical feedback. However, the biases you did not see should be relevant to the context of the research and text.
+For example, if the text or research has NOTHING about gender, then obviously gender bias will not be present, and you should not report on it, and instead other biases should be present in the key_findings_not_seen.
+
+
 The output should be provided in JSON format and must include:
 
 Highlighted Phrases: Specific excerpts or phrases from the text that exhibit the bias. Ensure a minimum of 3–5 examples per bias category, where applicable. If the text length is longer provide even more bias examples, be very detailed.
@@ -62,7 +75,8 @@ json
       "confidence_score": 0.8
     }
   ],
-  "final_summary": "The text exhibits significant biases, particularly in its gendered language and colonial framing of indigenous peoples. While it provides a detailed analysis from a Western perspective, it fails to include diverse regional viewpoints or underrepresented perspectives, such as those from LGBTQ+ communities. Addressing these issues would significantly enhance the neutrality and inclusivity of the text.",
+  "positive_feedback": "The text does well in these areas... and is significantly better than other texts in this category.....",
+  "negative_feedback": "The text exhibits significant biases, particularly in its gendered language and colonial framing of indigenous peoples. While it provides a detailed analysis from a Western perspective, it fails to include diverse regional viewpoints or underrepresented perspectives, such as those from LGBTQ+ communities. Addressing these issues would significantly enhance the neutrality and inclusivity of the text.",
   "key_findings": [
     {
       "category": "Regional/Cultural Bias",
@@ -76,6 +90,12 @@ json
       "category": "Colonial Perspectives",
       "details": "Implicit bias in comparing regional approaches to privacy, with a tendency to present Western approaches as more advanced or superior."
     }
+  ],
+  "key_findings_not_seen": [
+    {
+      "category": "Regional/Cultural Bias",
+      "details": "The text did well in avoiding bias in this category by..."
+    },
   ]
 }
 

@@ -22,28 +22,10 @@ import {
   Tooltip,
 } from "recharts";
 
-interface APIResponse {
-  content: string; // This is the raw JSON string
-  refusal: string | null; // Can be null or a string
-  role: string; // Role of the response, e.g., "assistant"
-}
 interface apiDataType{
   content : string; // raw json string returned by openai
   refusal : string | null;
   role : string;
-}
-interface BiasDataType {
-  bias_analysis: {
-    highlighted_phrase: string;
-    type_of_bias: string;
-    suggested_improvement: string;
-    confidence_score: number;
-  }[];
-  final_summary: string;
-  key_findings: {
-    category: string;
-    details: string;
-  }[];
 }
 interface BiasAnalysis {
   highlighted_phrase: string;
@@ -57,8 +39,10 @@ interface KeyFinding {
 }
 interface AnalysisResult {
   bias_analysis: BiasAnalysis[];
-  final_summary: string;
   key_findings: KeyFinding[];
+  key_findings_not_seen: KeyFinding[];
+  positive_feedback: string;
+  negative_feedback: string;
 }
 const COLORS = ['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#6366f1'];
 
@@ -66,7 +50,6 @@ export default function AnalysisDashboard() {
   const router = useRouter();
   const { isLoaded, userId } = useAuth();
   const [textData, setTextData] = useState<string | null>(null);
-  const [apiResponse, setApiResponse] = useState<apiDataType|null>(null);
   const [apiContent, setApiContent] = useState<AnalysisResult|null>(null);
   const [analysisStatus, setAnalysisStatus] = useState({
     hasInitialized: false,  // tracks if we've done initial data fetch
@@ -119,8 +102,6 @@ export default function AnalysisDashboard() {
           }
 
           const data = await response.json();
-          setApiResponse(data.result);
-          console.log('Analysis complete:', data.result);
           
           // clean data
           if (data.result?.content) {
@@ -218,6 +199,27 @@ export default function AnalysisDashboard() {
       </Card>
     );
   }
+
+  function KeyFindingsNotSeen({ findings }: { findings: KeyFinding[] }) {
+    return (
+      <Card className="col-span-2">
+        <CardHeader>
+          <CardTitle>Biases Not Seen</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {findings.map((finding, index) => (
+            <div className="flex items-start gap-3" key={index}>
+              <AlertCircle className="h-5 w-5 text-chart-1" />
+              <div>
+                <p className="font-medium">{finding.category}</p>
+                <p className="text-sm text-muted-foreground">{finding.details}</p>
+              </div>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    );
+  }
   
   function ImprovementSuggestions({ biasAnalysis }: { biasAnalysis: Array<{
     highlighted_phrase: string;
@@ -296,27 +298,53 @@ export default function AnalysisDashboard() {
             </p>
           </div>
   
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2">
 
-            {/* score card */}
-            <Card className="col-span-1">
-              <CardHeader className="space-y-1">
-                <CardTitle className="text-2xl font-bold">Overall Score</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="mt-4 space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">Confidence Level</span>
-                    <span className="text-sm text-muted-foreground">
-                      {(averageConfidence * 100).toFixed(0)}%
-                    </span>
-                  </div>
-                  <Progress value={averageConfidence * 100} className="h-2" />
-                </div>
-              </CardContent>
-            </Card>
-  
-            <KeyFindings findings={apiContent?.key_findings ?? []} />
+        {/* score card */}
+      <Card className="col-span-1">
+        <CardHeader className="space-y-1 pb-0"> {/* Adjust padding */}
+          <CardTitle className="text-2xl font-bold">Overall Score</CardTitle>
+        </CardHeader>
+        <CardContent className="pb-0 flex flex-col items-center justify-center align-middle"> {/* Adjust padding */}
+          <div className="mt-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-medium">Confidence Level</span>
+              <span className="text-sm text-muted-foreground">
+                {(averageConfidence * 100).toFixed(0)}%
+              </span>
+            </div>
+            <Progress value={averageConfidence * 100} className="h-2" />
+          </div>
+
+          <div className="mt-6 space-y-6 flex flex-col items-center justify-center align-middle border border-red-500">
+            {/* Positive Feedback */}
+            <div>
+              <div className="text-lg font-medium">Positive Feedback</div>
+              <div className="text-sm text-muted-foreground">
+                {apiContent?.positive_feedback}
+              </div>
+            </div>
+
+            {/* Critical Feedback */}
+            <div>
+              <div className="text-lg font-medium">Critical Feedback</div>
+              <div className="text-sm text-muted-foreground">
+                {apiContent?.negative_feedback}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+
+
+
+            {/* key findings */}
+            <div className="flex flex-col gap-6 w-full">
+              <KeyFindings findings={apiContent?.key_findings ?? []} />
+              <KeyFindingsNotSeen findings={apiContent?.key_findings_not_seen ?? []} />
+            </div>
+
 
             <ImprovementSuggestions biasAnalysis={apiContent?.bias_analysis ?? []} />
 
