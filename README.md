@@ -8,13 +8,9 @@ All data remains confidential and is deleted after analysis.
 Here's an example from a 15 page essay I wrote for my English Honors class on Data Privacy
 
 
-<img width="1319" alt="image" src="https://github.com/user-attachments/assets/d251a5f7-b2ba-464a-8f6a-afb51fd38261" />
 
-<img width="1296" alt="image" src="https://github.com/user-attachments/assets/b417b9f5-b04a-41d7-ae5c-3e721e8454af" />
 
-<img width="1292" alt="image" src="https://github.com/user-attachments/assets/fbee8edd-a096-4efd-a9c6-9913f21e803d" />
-
-<img width="1305" alt="image" src="https://github.com/user-attachments/assets/abdd8038-1807-4d9a-80da-d8230e8dba74" />
+https://github.com/user-attachments/assets/ef903254-5706-4867-9c3d-eecade0d9b62
 
 # Tech Stack
 Utilized Theo's <a href="https://create.t3.gg/" target="_blank">create-t3-app</a>  
