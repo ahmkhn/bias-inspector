@@ -26,7 +26,7 @@ Hosting: Vercel
 1. Refactor file deletion code flow  
 2. Add history of previous analysis extracted from analysis reports  
 3. Add option to paste URL alongside current input options    
-4. Ratelimit the Analyze feature with Upstash before public production release  
+--4. Ratelimit the Analyze feature with Upstash before public production release--
 5. Add users data alongside how many times they analyze onto Postgres  
 6. Cleanup the PDF extraction and analysis component into seperate util files  
 7. Find a solution for "A listener indicated an asynchronous response by returning true, but the message channel closed before a response was received" which exists only on old browsers  
