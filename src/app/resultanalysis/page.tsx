@@ -308,7 +308,7 @@ export default function AnalysisDashboard() {
         <CardContent className="pb-0 flex flex-col items-center justify-center align-middle"> {/* Adjust padding */}
           <div className="mt-4 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-sm font-medium">Confidence Level</span>
+              <span className="text-sm font-medium mr-8">Confidence Level</span>
               <span className="text-sm text-muted-foreground">
                 {(averageConfidence * 100).toFixed(0)}%
               </span>
@@ -316,7 +316,7 @@ export default function AnalysisDashboard() {
             <Progress value={averageConfidence * 100} className="h-2" />
           </div>
 
-          <div className="mt-6 space-y-6 flex flex-col items-center justify-center align-middle border border-red-500">
+          <div className="mt-16 flex flex-grow flex-col items-center justify-center align-middle">
             {/* Positive Feedback */}
             <div>
               <div className="text-lg font-medium">Positive Feedback</div>
@@ -327,7 +327,7 @@ export default function AnalysisDashboard() {
 
             {/* Critical Feedback */}
             <div>
-              <div className="text-lg font-medium">Critical Feedback</div>
+              <div className="mt-8 text-lg font-medium">Critical Feedback</div>
               <div className="text-sm text-muted-foreground">
                 {apiContent?.negative_feedback}
               </div>
