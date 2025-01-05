@@ -19,11 +19,12 @@ export default function DashboardPage() {
   const [url, setURLHook] = useState("");
   const router = useRouter();
   const [loading,setLoading] = useState(false);
-
+  const [analyzeDisabled, setAnalyzeDisabled] = useState(false);
 
   
 
   async function handleAnalyze  () {
+    setAnalyzeDisabled(true);
     let extractedText = "";
     if(url!=="" && activeTab==="pdf"){
       console.log('entered if block')
@@ -190,7 +191,8 @@ export default function DashboardPage() {
                     onClick={handleAnalyze}
                     disabled={
                       (activeTab === "text" && (text.split(/\s+/).length < 300 || text.split(/\s+/).length > 2000)) ||
-                      (activeTab === "pdf" && fileName === "" && url === "")
+                      (activeTab === "pdf" && fileName === "" && url === "") || 
+                      analyzeDisabled
                     }                    
                     className="rounded-lg bg-blue-600 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
