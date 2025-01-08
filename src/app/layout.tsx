@@ -10,7 +10,7 @@ import { ourFileRouter } from "./api/uploadthing/core";
 import { Toaster } from "sonner";
 import {CSPostHogProvider} from "./_analytics/providers";
 import { Footer } from "./_components/footer";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
   title: "Bias Inspector",
@@ -38,6 +38,7 @@ export default function RootLayout({
 
             <TopNav/>
             {children}
+            <SpeedInsights/>
             <Footer/>
             <Toaster/>
           </body>
