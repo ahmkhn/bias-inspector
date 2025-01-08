@@ -21,6 +21,9 @@ jobs:
         with:
           version: 8
 
+      - name: Create .env file
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+
       - name: Install dependencies
         run: pnpm install
 
