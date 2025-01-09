@@ -147,6 +147,7 @@ export default function AnalysisDashboard() {
   if (!isLoaded || !analysisStatus.isComplete) {
     return (
       <div
+        data-testid="loading-spinner"
         style={{
           display: "flex",
           justifyContent: "center",
