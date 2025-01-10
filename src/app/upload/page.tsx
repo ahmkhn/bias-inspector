@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Upload, FileText, AlertCircle } from "lucide-react";
+import { Upload, FileText, AlertCircle, Link } from "lucide-react";
 import { SimpleUploadButton } from "../_components/simple-upload-button";
 import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { Lock } from "lucide-react";
@@ -18,6 +18,7 @@ export default function DashboardPage() {
   const router = useRouter();
   const [loading,setLoading] = useState(false);
   const [analyzeDisabled, setAnalyzeDisabled] = useState(false);
+  const [articleURL,setArticleURL] = useState("");
 
   const { isLoaded } = useAuth(); // check if webpage has loaded
 
@@ -98,12 +99,22 @@ export default function DashboardPage() {
                   <Upload className="mr-2 inline-block h-4 w-4" />
                   PDF Upload
                 </button>
+                <button
+                  onClick={() => setActiveTab("url")}
+                  className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
+                    activeTab === "url"
+                      ? "bg-blue-600 text-white"
+                      : "text-muted-foreground hover:bg-secondary"
+                  }`}
+                >
+                  <Link className="mr-2 inline-block h-4 w-4" />
+                  URL Upload
+                </button>
               </div>
 
               {/* Input Area */}
               <div className="rounded-lg bg-card p-6 shadow-lg">
-                {activeTab === "text" ? (
-                  <div>
+                  {activeTab === "text" && <div>
                     <textarea
                       value={text}
                       onChange={(e) => setText(e.target.value)}
@@ -123,9 +134,9 @@ export default function DashboardPage() {
                         Maximum 2,000 words allowed
                       </p>
                     )}
-                  </div>
-                ) : (
-                  <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-12">
+                  </div>}
+
+                  {activeTab ==="pdf"&&<div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border p-12">
                     <Upload className="mb-4 h-12 w-12 text-muted-foreground" />
                     <p className="mb-2 text-lg font-medium">Drop your PDF here</p>
                     <p className="mb-4 text-sm text-muted-foreground">
@@ -141,8 +152,10 @@ export default function DashboardPage() {
                       Select PDF
                     </label>
                     <p className="text-black">{fileName}</p>
-                  </div>
-                )}
+                  </div>}
+
+                  {activeTab=="url"&&<div className="text-black">hello</div>}
+
 
                 {/* Analyze Button */}
                 <div className="mt-6 flex justify-end">
