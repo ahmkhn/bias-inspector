@@ -154,16 +154,26 @@ export default function DashboardPage() {
                     <p className="text-black">{fileName}</p>
                   </div>}
 
-                  {activeTab=="url"&&<div className="text-black">hello</div>}
+                  {activeTab=="url"&&<div>
+                    <input
+                      type="url"
+                      required
+                      value={articleURL}
+                      onChange={(e) => setArticleURL(e.target.value)}
+                      placeholder="https://www.example.com"
+                      className=" w-full rounded-lg border border-border bg-background p-4 text-foreground focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600/20"
+                    />
+                  </div>}
 
 
                 {/* Analyze Button */}
                 <div className="mt-6 flex justify-end">
                   <button
-                    onClick={() => handleAnalyze(url, activeTab, text, setLoading, setAnalyzeDisabled, router)}
+                    onClick={() => handleAnalyze(url, activeTab, text, setLoading, setAnalyzeDisabled, router, articleURL)}
                     disabled={
                       (activeTab === "text" && (text.split(/\s+/).length < 300 || text.split(/\s+/).length > 2000)) ||
                       (activeTab === "pdf" && fileName === "" && url === "") || 
+                      (activeTab === "url" && articleURL === "") ||
                       analyzeDisabled
                     }                    
                     className="rounded-lg bg-blue-600 px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"

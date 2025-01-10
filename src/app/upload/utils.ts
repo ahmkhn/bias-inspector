@@ -2,7 +2,7 @@ import * as pdfjsLib from "pdfjs-dist";
 import { PDFWorker } from "pdfjs-dist";
 import { useRouter } from "next/navigation";
 
-export async function handleAnalyze  (url:string, activeTab:string, text:string, setLoading:any, setAnalyzeDisabled:any, router:any) {
+export async function handleAnalyze  (url:string, activeTab:string, text:string, setLoading:any, setAnalyzeDisabled:any, router:any, articleURL:string) {
     setAnalyzeDisabled(true);
     let extractedText = "";
     if(url!=="" && activeTab==="pdf"){
@@ -29,6 +29,12 @@ export async function handleAnalyze  (url:string, activeTab:string, text:string,
       localStorage.setItem("textData", text);
       setLoading(true);
       router.push("/resultanalysis");
+    }else if(articleURL!=="" && activeTab==="url"){
+      setLoading(true);
+      // get the article text from the url
+      const articleText = await fetch(articleURL).then(response => response.text());
+      console.log(articleText);
+      //router.push("/resultanalysis");
     }
 
     // send extracted text to OpenAI API, retrieve JSON response and format it in resultanalysis page.
