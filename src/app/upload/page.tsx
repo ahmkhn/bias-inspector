@@ -101,6 +101,7 @@ export default function DashboardPage() {
                 </button>
                 <button
                   onClick={() => setActiveTab("url")}
+                  disabled={true}
                   className={`flex-1 rounded-md py-2 text-sm font-medium transition-colors ${
                     activeTab === "url"
                       ? "bg-blue-600 text-white"
@@ -108,7 +109,7 @@ export default function DashboardPage() {
                   }`}
                 >
                   <Link className="mr-2 inline-block h-4 w-4" />
-                  URL Upload
+                  URL Upload (coming soon!)
                 </button>
               </div>
 
